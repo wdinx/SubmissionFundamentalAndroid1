@@ -14,4 +14,13 @@
         <!-- Customize your theme here. -->
         <item name="colorOnSurfaceVariant">@color/white</item>
     </style>
+
+    <style name="Theme.GitHubUser.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GitHubUser.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GitHubUser.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -1,9 +1,13 @@
 package com.bangkit.githubuser.ui
 
+import android.content.ClipData.Item
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -21,7 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
@@ -50,15 +54,12 @@ class MainActivity : AppCompatActivity() {
                 .editText
                 .setOnEditorActionListener{textView, actionId, event ->
                     searchBar.text = searchView.text
-                    mainViewModel.findUser(ApiConfig.getApiService().getSearch(searchBar.text.toString()))
+                    mainViewModel.findUser(searchBar.text.toString())
                     searchView.hide()
                     false
                 }
         }
     }
-
-
-
 
     private fun setUser(user: List<ItemsItem>){
         val adapter = UserAdapter()
@@ -72,5 +73,4 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
-    }
-}
+    }}

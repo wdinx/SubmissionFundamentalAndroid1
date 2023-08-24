@@ -24,15 +24,16 @@ class MainViewModel : ViewModel(){
 
     companion object{
         private const val TAG = "MainViewModel"
-        private var USERNAME = "udin"
+        var USERNAME = "udin"
     }
 
     init {
         findUser()
     }
 
-    fun findUser(client: Call<SearchResponse> = ApiConfig.getApiService().getSearch(USERNAME)){
+    fun findUser(userName: String = USERNAME){
         _isLoading.value = true
+        val client: Call<SearchResponse> = ApiConfig.getApiService().getSearch(userName)
         client.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 _isLoading.value = false

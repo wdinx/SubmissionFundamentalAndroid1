@@ -8,28 +8,28 @@ import retrofit2.http.*
 import retrofit2.Call
 
 interface ApiService {
-    @Headers("Authorization: token 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")
-    @GET("search/users?q=udin")
+
+    @GET("search/users")
     fun getSearch(
-        @Query("q") login: String = "wdinx"
+        @Query("q") login: String
     ):Call<SearchResponse>
 
 //    @Headers("Authorization: token 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")
-    @GET("search/users/{username}}")
+    @GET("users/{login}")
     fun getUser(
-        @Path("username") login: String
+        @Path("login") login: String
     ):Call<UserResponse>
 
 //    @Headers("Authorization: token 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")
-    @GET("search/users/{username}/following")
+    @GET("users/{login}/following")
     fun getFollowing(
-        @Path("username") login: String
+        @Path("login") login: String
     ):Call<FollowingResponse>
 
 //    @Headers("Authorization: token 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")
-    @GET("search/users/{username}/followers")
+    @GET("users/{login}/followers")
     fun getFollowes(
-        @Path("username") login: String
+        @Path("login") login: String
     ):Call<FollowersResponse>
 
 
