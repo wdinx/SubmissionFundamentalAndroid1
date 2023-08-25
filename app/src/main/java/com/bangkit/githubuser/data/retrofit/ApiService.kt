@@ -1,9 +1,7 @@
 package com.bangkit.githubuser.data.retrofit
 
-import com.bangkit.githubuser.data.reponse.FollowersResponse
-import com.bangkit.githubuser.data.reponse.FollowingResponse
-import com.bangkit.githubuser.data.reponse.SearchResponse
-import com.bangkit.githubuser.data.reponse.UserResponse
+import android.content.ClipData.Item
+import com.bangkit.githubuser.data.reponse.*
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -24,13 +22,13 @@ interface ApiService {
     @GET("users/{login}/following")
     fun getFollowing(
         @Path("login") login: String
-    ):Call<FollowingResponse>
+    ):Call<List<ItemsItem>>
 
 //    @Headers("Authorization: token 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")
     @GET("users/{login}/followers")
     fun getFollowes(
         @Path("login") login: String
-    ):Call<FollowersResponse>
+    ):Call<List<ItemsItem>>
 
 
 }

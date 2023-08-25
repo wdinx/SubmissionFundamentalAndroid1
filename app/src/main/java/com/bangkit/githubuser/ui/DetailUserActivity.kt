@@ -54,7 +54,9 @@ class DetailUserActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+
         val sectionPagerAdapter = SectionPagerAdapter(this)
+        sectionPagerAdapter.username = USERNAME
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionPagerAdapter
         val tabs: TabLayout = binding.tabs

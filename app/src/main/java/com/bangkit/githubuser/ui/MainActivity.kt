@@ -73,4 +73,5 @@ class MainActivity : AppCompatActivity(){
         } else {
             binding.progressBar.visibility = View.GONE
         }
-    }}
+    }
+}
