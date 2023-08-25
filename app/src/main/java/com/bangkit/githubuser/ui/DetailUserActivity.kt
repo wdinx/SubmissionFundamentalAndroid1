@@ -64,16 +64,6 @@ class DetailUserActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0f
 
-//        val fragmentManager = supportFragmentManager
-//        val followFragment = FollowFragment()
-//        val fragment = fragmentManager.findFragmentByTag(FollowFragment::class.java.simpleName)
-//
-//        if (fragment !is FollowFragment){
-//            supportFragmentManager.commitNow (allowStateLoss = true){
-//                replace(R.id.fragmentFollow, followFragment, FollowFragment::class.java.simpleName)
-//            }
-//        }
-
     }
 
     fun setDetailUser(userResponse: UserResponse){
@@ -86,7 +76,7 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvFollowing.text = getString(R.string.following, userResponse.following)
     }
 
-    private fun showLoading(isLoading: Boolean){
+    fun showLoading(isLoading: Boolean){
         if (isLoading){
             binding.progressBar.visibility = View.VISIBLE
         }else{
