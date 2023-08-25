@@ -9,4 +9,6 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="followers">%d Followers</string>
     <string name="following">%d Following</string>
+    <string name="followersView">Followers</string>
+    <string name="followingView">Following</string>
 </resources>
