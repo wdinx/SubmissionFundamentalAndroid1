@@ -17,13 +17,20 @@ class DetailUserViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _username = MutableLiveData<String>()
+    var username: LiveData<String> = _username
+
     companion object{
         private const val TAG = "DetailUserViewModel"
     }
 
-    fun findDetailUser(userName: String = "") {
+    init{
+        findDetailUser()
+    }
+
+    fun findDetailUser() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getUser(userName)
+        val client = ApiConfig.getApiService().getUser(setUser())
         client.enqueue(object : Callback<UserResponse>{
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 _isLoading.value = false
@@ -43,6 +50,11 @@ class DetailUserViewModel: ViewModel() {
             }
 
         })
+    }
+
+    fun setUser(): String{
+        _username.value = DetailUserActivity.USERNAME
+        return _username.value!!
     }
 
 

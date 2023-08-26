@@ -1,6 +1,5 @@
 package com.bangkit.githubuser.data.retrofit
 
-import android.content.ClipData.Item
 import com.bangkit.githubuser.data.reponse.*
 import retrofit2.http.*
 import retrofit2.Call

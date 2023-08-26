@@ -18,9 +18,6 @@ class FollowViewModel: ViewModel() {
     val listFollowers: LiveData<List<ItemsItem>> = _listFollowers
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    lateinit var userName: String
 
     companion object{
         private const val TAG = "MainViewModel"

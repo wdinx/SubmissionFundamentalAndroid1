@@ -5,16 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.githubuser.R
 import com.bangkit.githubuser.data.reponse.ItemsItem
 import com.bangkit.githubuser.data.reponse.adapter.UserAdapter
 import com.bangkit.githubuser.databinding.FragmentFollowBinding
-import kotlinx.coroutines.flow.combine
-import kotlin.properties.Delegates
 
 class FollowFragment : Fragment() {
 
@@ -40,7 +36,7 @@ class FollowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var username = ARG_USERNAME
-        var position: String = ARG_POSITION
+        var position = ARG_POSITION
 
 
         arguments?.let {
@@ -65,9 +61,10 @@ class FollowFragment : Fragment() {
                 setUser(it)
             }
         }
-        followViewModel.isLoading.observe(viewLifecycleOwner){
-            showLoading(it)
-        }
+
+//        followViewModel.isLoading.observe(viewLifecycleOwner){
+//            showLoading(it)
+//        }
 
     }
     private fun setUser(user: List<ItemsItem>){

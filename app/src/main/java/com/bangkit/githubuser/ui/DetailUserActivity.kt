@@ -5,21 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commitNow
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.githubuser.R
 import com.bangkit.githubuser.data.reponse.UserResponse
 import com.bangkit.githubuser.data.reponse.adapter.SectionPagerAdapter
-import com.bangkit.githubuser.data.retrofit.ApiConfig
 import com.bangkit.githubuser.databinding.ActivityDetailUserBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -42,9 +35,8 @@ class DetailUserActivity : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        USERNAME = intent.getStringExtra(USERNAME)!!
+        USERNAME = intent.getStringExtra(USERNAME).toString()
 
-        detailUserViewModel.findDetailUser(USERNAME)
 
         detailUserViewModel.detailUser.observe(this){
            setDetailUser(it!!)
@@ -53,7 +45,6 @@ class DetailUserActivity : AppCompatActivity() {
         detailUserViewModel.isLoading.observe(this){
             showLoading(it)
         }
-
 
         val sectionPagerAdapter = SectionPagerAdapter(this)
         sectionPagerAdapter.username = USERNAME
@@ -88,7 +79,7 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvFollowing.text = getString(R.string.following, userResponse.following)
     }
 
-    private fun showLoading(isLoading: Boolean){
+    fun showLoading(isLoading: Boolean){
         if (isLoading){
             binding.progressBar.visibility = View.VISIBLE
         }else{
