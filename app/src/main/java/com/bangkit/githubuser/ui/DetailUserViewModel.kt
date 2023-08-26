@@ -20,6 +20,9 @@ class DetailUserViewModel: ViewModel() {
     private val _username = MutableLiveData<String>()
     var username: LiveData<String> = _username
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
+
     companion object{
         private const val TAG = "DetailUserViewModel"
     }
@@ -39,6 +42,7 @@ class DetailUserViewModel: ViewModel() {
                     if (responseBody != null){
                         _detailUser.value = responseBody
                     }else{
+                        _errorMessage.value = response.message()
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
@@ -46,6 +50,7 @@ class DetailUserViewModel: ViewModel() {
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
+                _errorMessage.value = t.message
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 

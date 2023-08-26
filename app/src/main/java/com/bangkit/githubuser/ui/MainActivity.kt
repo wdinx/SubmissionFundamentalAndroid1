@@ -3,6 +3,7 @@ package com.bangkit.githubuser.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,12 @@ class MainActivity : AppCompatActivity(){
 
         mainViewModel.isLoading.observe(this){
             showLoading(it)
+        }
+
+        mainViewModel.errorMessage.observe(this){
+            if (it != null){
+                Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
+            }
         }
 
         with(binding){

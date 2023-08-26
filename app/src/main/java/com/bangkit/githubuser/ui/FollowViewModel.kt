@@ -17,7 +17,8 @@ class FollowViewModel: ViewModel() {
     private val _listFollowers = MutableLiveData<List<ItemsItem>>()
     val listFollowers: LiveData<List<ItemsItem>> = _listFollowers
 
-    private val _isLoading = MutableLiveData<Boolean>()
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
     companion object{
         private const val TAG = "MainViewModel"
@@ -28,7 +29,6 @@ class FollowViewModel: ViewModel() {
     }
 
     fun findFollowers(userName: String = ""){
-        _isLoading.value = true
         val following: Call<List<ItemsItem>> = ApiConfig.getApiService().getFollowes(userName)
         following.enqueue(object : Callback<List<ItemsItem>> {
             override fun onResponse(
@@ -36,18 +36,18 @@ class FollowViewModel: ViewModel() {
                 response: Response<List<ItemsItem>>
             ) {
                 if (response.isSuccessful){
-                    _isLoading.value = false
                     val responseBody = response.body()
                     if (responseBody != null){
                         _listFollowers.value = responseBody!!
                     } else {
+                        _errorMessage.value = response.message()
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
-                _isLoading.value = false
+                _errorMessage.value = t.message
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 
@@ -55,7 +55,6 @@ class FollowViewModel: ViewModel() {
     }
 
     fun findFollowing(userName: String = ""){
-        _isLoading.value = true
         val following: Call<List<ItemsItem>> = ApiConfig.getApiService().getFollowing(userName)
         following.enqueue(object : Callback<List<ItemsItem>> {
             override fun onResponse(
@@ -63,18 +62,18 @@ class FollowViewModel: ViewModel() {
                 response: Response<List<ItemsItem>>
             ) {
                 if (response.isSuccessful){
-                    _isLoading.value = false
                     val responseBody = response.body()
                     if (responseBody != null){
                         _listFollowing.value = responseBody!!
                     } else {
+                        _errorMessage.value = response.message()
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
-                _isLoading.value = false
+                _errorMessage.value = t.message
                 Log.e(TAG, "onFailure: ${t.message}")
             }
 

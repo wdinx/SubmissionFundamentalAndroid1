@@ -3,6 +3,7 @@ package com.bangkit.githubuser.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.viewpager2.widget.ViewPager2
@@ -46,6 +47,12 @@ class DetailUserActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        detailUserViewModel.errorMessage.observe(this){
+            if (it != null){
+                Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         val sectionPagerAdapter = SectionPagerAdapter(this)
         sectionPagerAdapter.username = USERNAME
         val viewPager: ViewPager2 = binding.viewPager
@@ -56,16 +63,6 @@ class DetailUserActivity : AppCompatActivity() {
         }.attach()
 
         supportActionBar?.elevation = 0f
-
-//        val fragmentManager = supportFragmentManager
-//        val followFragment = FollowFragment()
-//        val fragment = fragmentManager.findFragmentByTag(FollowFragment::class.java.simpleName)
-//
-//        if (fragment !is FollowFragment){
-//            supportFragmentManager.commitNow (allowStateLoss = true){
-//                replace(R.id.fragmentFollow, followFragment, FollowFragment::class.java.simpleName)
-//            }
-//        }
 
     }
 

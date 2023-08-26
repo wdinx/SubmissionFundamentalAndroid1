@@ -19,8 +19,8 @@ class MainViewModel : ViewModel(){
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _snackBar = MutableLiveData<Event<String>>()
-    val snackBar = _snackBar
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage = _errorMessage
 
     companion object{
         private const val TAG = "MainViewModel"
@@ -42,6 +42,7 @@ class MainViewModel : ViewModel(){
                     if (responseBody != null){
                         _searchUser.value = responseBody.items
                     } else {
+                        _errorMessage.value = response.message()
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
@@ -49,6 +50,7 @@ class MainViewModel : ViewModel(){
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 _isLoading.value = false
+                _errorMessage.value = t.message
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })

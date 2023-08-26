@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,15 +57,21 @@ class FollowFragment : Fragment() {
             followViewModel.listFollowers.observe(viewLifecycleOwner){
                 setUser(it)
             }
+            followViewModel.errorMessage.observe(viewLifecycleOwner){
+                if (it != null){
+                    Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+                }
+            }
         }else{
             followViewModel.listFollowing.observe(viewLifecycleOwner){
                 setUser(it)
             }
+            followViewModel.errorMessage.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-
-//        followViewModel.isLoading.observe(viewLifecycleOwner){
-//            showLoading(it)
-//        }
 
     }
     private fun setUser(user: List<ItemsItem>){
