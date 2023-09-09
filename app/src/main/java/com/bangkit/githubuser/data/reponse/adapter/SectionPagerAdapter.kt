@@ -20,7 +20,7 @@ class SectionPagerAdapter(activity: AppCompatActivity): FragmentStateAdapter(act
             putString(FollowFragment.ARG_USERNAME, username)
         }
 
-        return fragment as Fragment
+        return fragment
     }
 
 }

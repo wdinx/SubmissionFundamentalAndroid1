@@ -26,6 +26,18 @@ class MainActivity : AppCompatActivity(){
         val itemDecoration =DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
 
+        with(binding){
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener{textView, actionId, event ->
+                    searchBar.text = searchView.text
+                    mainViewModel.findUser(searchBar.text.toString())
+                    searchView.hide()
+                    false
+                }
+        }
+
         mainViewModel.searchUser.observe(this){
             setUser(it)
         }
@@ -38,18 +50,6 @@ class MainActivity : AppCompatActivity(){
             if (it != null){
                 Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        with(binding){
-            searchView.setupWithSearchBar(searchBar)
-            searchView
-                .editText
-                .setOnEditorActionListener{textView, actionId, event ->
-                    searchBar.text = searchView.text
-                    mainViewModel.findUser(searchBar.text.toString())
-                    searchView.hide()
-                    false
-                }
         }
     }
 

@@ -11,4 +11,6 @@
     <string name="following">%d Following</string>
     <string name="followersView">Followers</string>
     <string name="followingView">Following</string>
+    <string name="noFollowing">Tidak Ada Following</string>
+    <string name="noFollowers">Tidak Ada Followers</string>
 </resources>

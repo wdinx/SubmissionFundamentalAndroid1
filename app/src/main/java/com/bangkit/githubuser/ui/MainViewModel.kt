@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.bangkit.githubuser.data.reponse.ItemsItem
 import com.bangkit.githubuser.data.reponse.SearchResponse
 import com.bangkit.githubuser.data.retrofit.ApiConfig
-import com.bangkit.githubuser.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +19,7 @@ class MainViewModel : ViewModel(){
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val _errorMessage = MutableLiveData<String>()
-    val errorMessage = _errorMessage
+    val errorMessage: LiveData<String> = _errorMessage
 
     companion object{
         private const val TAG = "MainViewModel"
@@ -30,7 +29,6 @@ class MainViewModel : ViewModel(){
     init {
         findUser()
     }
-
     fun findUser(userName: String = USERNAME){
         _isLoading.value = true
         val client: Call<SearchResponse> = ApiConfig.getApiService().getSearch(userName)

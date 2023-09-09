@@ -27,7 +27,9 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
 
-    private val detailUserViewModel by viewModels<DetailUserViewModel>()
+    private val detailUserViewModel by viewModels<DetailUserViewModel>(){
+        ViewModelFactory.getInstance(application)
+    }
 
     private lateinit var binding: ActivityDetailUserBinding
 
@@ -41,10 +43,7 @@ class DetailUserActivity : AppCompatActivity() {
 
         detailUserViewModel.detailUser.observe(this){
            setDetailUser(it!!)
-        }
-
-        detailUserViewModel.isLoading.observe(this){
-            showLoading(it)
+            binding.tabs.visibility = View.VISIBLE
         }
 
         detailUserViewModel.errorMessage.observe(this){
@@ -74,13 +73,5 @@ class DetailUserActivity : AppCompatActivity() {
             .into(binding.imgDetailUser)
         binding.tvFollowers.text = getString(R.string.followers, userResponse.followers)
         binding.tvFollowing.text = getString(R.string.following, userResponse.following)
-    }
-
-    fun showLoading(isLoading: Boolean){
-        if (isLoading){
-            binding.progressBar.visibility = View.VISIBLE
-        }else{
-            binding.progressBar.visibility = View.GONE
-        }
     }
 }

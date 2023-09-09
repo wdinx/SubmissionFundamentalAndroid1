@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.githubuser.R
 import com.bangkit.githubuser.data.reponse.ItemsItem
 import com.bangkit.githubuser.data.reponse.adapter.UserAdapter
 import com.bangkit.githubuser.databinding.FragmentFollowBinding
@@ -53,24 +53,27 @@ class FollowFragment : Fragment() {
         followViewModel.findFollowers(username)
         followViewModel.findFollowing(username)
 
-        if (position == "1"){
-            followViewModel.listFollowers.observe(viewLifecycleOwner){
-                setUser(it)
-            }
-            followViewModel.errorMessage.observe(viewLifecycleOwner){
-                if (it != null){
-                    Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
-                }
-            }
+        val follow = if (position == "1"){
+            followViewModel.listFollowers
         }else{
-            followViewModel.listFollowing.observe(viewLifecycleOwner){
+            followViewModel.listFollowing
+        }
+
+        follow.observe(this){
+            binding!!.tvFollow.visibility = View.VISIBLE
+            if (it.isEmpty()){
+                if (position == "1"){
+                    binding!!.tvFollow.text = getString(R.string.noFollowers)
+                }else{
+                    binding!!.tvFollow.text = getString(R.string.noFollowing)
+                }
+            }else{
                 setUser(it)
             }
-            followViewModel.errorMessage.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
-                }
-            }
+        }
+
+        followViewModel.isLoading.observe(this){
+            showLoading(it)
         }
 
     }
