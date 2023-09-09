@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName
 data class UserResponse(
 
 	@field:SerializedName("login")
-	val login: String,
+	val login: String = "",
 
 	@field:SerializedName("id")
-	val id: Int,
+	val id: Int = 0,
 
 	@field:SerializedName("followers")
-	val followers: Int,
+	val followers: Int = 0,
 
 	@field:SerializedName("avatar_url")
-	val avatarUrl: String,
+	val avatarUrl: String = "",
 
 	@field:SerializedName("following")
-	val following: Int,
+	val following: Int = 0,
 
 	@field:SerializedName("name")
 	val name: String? = "",

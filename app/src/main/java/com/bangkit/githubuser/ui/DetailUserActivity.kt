@@ -10,15 +10,22 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.githubuser.R
 import com.bangkit.githubuser.data.reponse.UserResponse
 import com.bangkit.githubuser.data.reponse.adapter.SectionPagerAdapter
+import com.bangkit.githubuser.database.FavoriteUser
 import com.bangkit.githubuser.databinding.ActivityDetailUserBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailUserActivity : AppCompatActivity() {
 
     companion object{
         var USERNAME = ""
+        var ID = ""
+        var IMAGE = ""
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.followersView,
@@ -26,9 +33,11 @@ class DetailUserActivity : AppCompatActivity() {
         )
     }
 
+    private val detailUserViewModel by viewModels<DetailUserViewModel>()
 
-    private val detailUserViewModel by viewModels<DetailUserViewModel>(){
-        ViewModelFactory.getInstance(application)
+    val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val viewModel by viewModels<FavoriteUserViewModel> {
+        factory
     }
 
     private lateinit var binding: ActivityDetailUserBinding
@@ -39,10 +48,13 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         USERNAME = intent.getStringExtra(USERNAME).toString()
+        ID = intent.getIntExtra(ID, 0).toString()
+        IMAGE = intent.getStringExtra(IMAGE).toString()
 
+        val favoriteUser = FavoriteUser(ID.toInt(), USERNAME, IMAGE)
 
         detailUserViewModel.detailUser.observe(this){
-           setDetailUser(it!!)
+            setDetailUser(it!!)
             binding.tabs.visibility = View.VISIBLE
         }
 
@@ -60,6 +72,12 @@ class DetailUserActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager){tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
+        binding.fabAdd.setOnClickListener {
+            if (binding.fabAdd.isChecked == true){
+                viewModel.saveFavoriteUser(favoriteUser)
+            }
+        }
 
         supportActionBar?.elevation = 0f
 

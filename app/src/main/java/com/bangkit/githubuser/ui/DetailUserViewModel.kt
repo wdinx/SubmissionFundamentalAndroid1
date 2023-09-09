@@ -1,18 +1,22 @@
 package com.bangkit.githubuser.ui
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.bangkit.githubuser.data.FavoriteUserRepository
 import com.bangkit.githubuser.data.reponse.UserResponse
 import com.bangkit.githubuser.data.retrofit.ApiConfig
+import com.bangkit.githubuser.database.FavoriteUser
+import com.bangkit.githubuser.database.UserDao
+import com.bangkit.githubuser.database.UserRoomDatabase
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel: ViewModel() {
+class DetailUserViewModel(application: Application) : ViewModel() {
     private val _detailUser = MutableLiveData<UserResponse?>()
-    val  detailUser : LiveData<UserResponse?> = _detailUser
+    val detailUser: LiveData<UserResponse?> = _detailUser
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -23,25 +27,28 @@ class DetailUserViewModel: ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    companion object{
+    private var isFavorite = false
+
+    companion object {
         private const val TAG = "DetailUserViewModel"
     }
 
-    init{
+    init {
         findDetailUser()
     }
 
     fun findDetailUser() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getUser(setUser())
-        client.enqueue(object : Callback<UserResponse>{
+        client.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 _isLoading.value = false
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null){
+                    if (responseBody != null) {
                         _detailUser.value = responseBody
-                    }else{
+
+                    } else {
                         _errorMessage.value = response.message()
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
@@ -57,10 +64,9 @@ class DetailUserViewModel: ViewModel() {
         })
     }
 
-    fun setUser(): String{
+    fun setUser(): String {
         _username.value = DetailUserActivity.USERNAME
         return _username.value!!
     }
-
 
 }
