@@ -1,16 +1,22 @@
 package com.bangkit.githubuser.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.bangkit.githubuser.data.reponse.UserResponse
 import com.bangkit.githubuser.data.retrofit.ApiConfig
+import com.bangkit.githubuser.database.FavoriteUserRepository
+import com.bangkit.githubuser.database.enitity.FavoriteUserEntity
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel: ViewModel() {
+class DetailUserViewModel(private val favoriteUserRepository: FavoriteUserRepository): ViewModel() {
     private val _detailUser = MutableLiveData<UserResponse?>()
     val  detailUser : LiveData<UserResponse?> = _detailUser
 
@@ -22,6 +28,11 @@ class DetailUserViewModel: ViewModel() {
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
+
+    private val _checkUser = MutableLiveData<Boolean>()
+    val checkUser: LiveData<Boolean> = _checkUser
+
+    private val _favoriteUserFavorite = MutableLiveData<FavoriteUserEntity>()
 
     companion object{
         private const val TAG = "DetailUserViewModel"
@@ -62,5 +73,33 @@ class DetailUserViewModel: ViewModel() {
         return _username.value!!
     }
 
+    fun setBookmarked(){
+        val favoriteUserEntity = FavoriteUserEntity(_detailUser.value!!.id, _detailUser.value!!.login, _detailUser.value!!.avatarUrl)
 
+        viewModelScope.launch {
+            favoriteUserRepository.setBookmarkedNews(favoriteUserEntity)
+        }
+    }
+
+    fun delete(){
+        viewModelScope.launch {
+            favoriteUserRepository.deleteUser(_detailUser.value!!.login)
+        }
+    }
+
+    fun getFavoriteByUser(user: String): LiveData<FavoriteUserEntity>{
+        return favoriteUserRepository.getFavoriteByUser(user)
+    }
+
+//    fun checkUser(username: String){
+//        viewModelScope.launch {
+//            val user = favoriteUserRepository.getFavoriteByUser(username)
+//            @Suppress("SENSELESS_COMPARISON")
+//            if (user != null){
+//                delete()
+//            }else{
+//                setBookmarked()
+//            }
+//        }
+//    }
 }

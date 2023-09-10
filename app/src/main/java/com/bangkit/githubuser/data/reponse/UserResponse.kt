@@ -2,8 +2,6 @@ package com.bangkit.githubuser.data.reponse
 
 import com.google.gson.annotations.SerializedName
 
-
-
 data class UserResponse(
 
 	@field:SerializedName("login")
