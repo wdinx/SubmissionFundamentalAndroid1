@@ -1,22 +1,14 @@
 package com.bangkit.githubuser.data.retrofit
 
-import androidx.viewbinding.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
-    companion object{
-        fun getApiService(): ApiService{
-            val loggingInterceptor = if (BuildConfig.DEBUG){
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-                }else{
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-                }
-
-            val authInterceptor = Interceptor{
+    companion object {
+        fun getApiService(): ApiService {
+            val authInterceptor = Interceptor {
                 val req = it.request()
                 val requestHeader = req.newBuilder()
                     .addHeader("Authorization", "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")

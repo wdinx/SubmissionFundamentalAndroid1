@@ -2,17 +2,18 @@
     <!-- Base application theme. -->
     <style name="Theme.GitHubUser" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#A8DF8E</item>
-        <item name="colorPrimaryVariant">#A8DF8E</item>
-        <item name="colorOnPrimary">#FFE5E5</item>
+        <item name="colorPrimary">#A8A4A4</item>
+        <item name="colorPrimaryVariant">#183D3D</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#FFBFBF</item>
+        <item name="colorSecondary">#374544</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">#000</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="colorOnSurfaceVariant">@color/black</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="tabIndicatorColor">#2B312F</item>
     </style>
 
     <!--Night Mode-->
@@ -20,7 +21,7 @@
         <item name="android:background">#FFFFFF</item>
     </style>
 
-    <style name="TAB_LAYOUT">
-        <item name="android:color">#B69595</item>
+    <style name="BACKGROUND_COLOR">
+        <item name="android:background">#00000000</item>
     </style>
 </resources>

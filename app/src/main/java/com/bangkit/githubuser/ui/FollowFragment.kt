@@ -21,10 +21,11 @@ class FollowFragment : Fragment() {
     private val followViewModel by viewModels<FollowViewModel>()
 
 
-    companion object{
+    companion object {
         const val ARG_POSITION = "position"
         const val ARG_USERNAME = "username"
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,31 +54,31 @@ class FollowFragment : Fragment() {
         followViewModel.findFollowers(username)
         followViewModel.findFollowing(username)
 
-        val follow = if (position == "1"){
+        val follow = if (position == "1") {
             followViewModel.listFollowers
-        }else{
+        } else {
             followViewModel.listFollowing
         }
 
-        follow.observe(this){
+        follow.observe(this) {
             binding!!.tvFollow.visibility = View.VISIBLE
-            if (it.isEmpty()){
-                if (position == "1"){
+            if (it.isEmpty()) {
+                if (position == "1") {
                     binding!!.tvFollow.text = getString(R.string.noFollowers)
-                }else{
+                } else {
                     binding!!.tvFollow.text = getString(R.string.noFollowing)
                 }
-            }else{
+            } else {
                 setUser(it)
             }
         }
 
-        followViewModel.isLoading.observe(this){
+        followViewModel.isLoading.observe(this) {
             showLoading(it)
         }
-
     }
-    private fun setUser(user: List<ItemsItem>){
+
+    private fun setUser(user: List<ItemsItem>) {
         val adapter = UserAdapter()
         adapter.submitList(user)
         binding?.rvFollow?.adapter = adapter

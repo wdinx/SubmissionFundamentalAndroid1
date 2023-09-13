@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel(){
+class MainViewModel : ViewModel() {
     private val _searchUser = MutableLiveData<List<ItemsItem>>()
     val searchUser: LiveData<List<ItemsItem>> = _searchUser
 
@@ -21,7 +21,7 @@ class MainViewModel : ViewModel(){
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    companion object{
+    companion object {
         private const val TAG = "MainViewModel"
         var USERNAME = "arif"
     }
@@ -29,15 +29,19 @@ class MainViewModel : ViewModel(){
     init {
         findUser()
     }
-    fun findUser(userName: String = USERNAME){
+
+    fun findUser(userName: String = USERNAME) {
         _isLoading.value = true
         val client: Call<SearchResponse> = ApiConfig.getApiService().getSearch(userName)
         client.enqueue(object : Callback<SearchResponse> {
-            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+            override fun onResponse(
+                call: Call<SearchResponse>,
+                response: Response<SearchResponse>
+            ) {
                 _isLoading.value = false
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null){
+                    if (responseBody != null) {
                         _searchUser.value = responseBody.items
                     } else {
                         _errorMessage.value = response.message()

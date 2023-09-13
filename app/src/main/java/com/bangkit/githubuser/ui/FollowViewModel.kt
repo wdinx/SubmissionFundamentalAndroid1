@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowViewModel: ViewModel() {
+class FollowViewModel : ViewModel() {
     private val _listFollowing = MutableLiveData<List<ItemsItem>>()
     val listFollowing: LiveData<List<ItemsItem>> = _listFollowing
 
@@ -21,9 +21,8 @@ class FollowViewModel: ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = _errorMessage
 
-    companion object{
+    companion object {
         private const val TAG = "MainViewModel"
     }
 
@@ -31,7 +30,7 @@ class FollowViewModel: ViewModel() {
         findFollowers()
     }
 
-    fun findFollowers(userName: String = ""){
+    fun findFollowers(userName: String = "") {
         _isLoading.value = true
         val following: Call<List<ItemsItem>> = ApiConfig.getApiService().getFollowes(userName)
         following.enqueue(object : Callback<List<ItemsItem>> {
@@ -39,10 +38,10 @@ class FollowViewModel: ViewModel() {
                 call: Call<List<ItemsItem>>,
                 response: Response<List<ItemsItem>>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null){
+                    if (responseBody != null) {
                         _listFollowers.value = responseBody!!
                     } else {
                         _isLoading.value = false
@@ -61,7 +60,7 @@ class FollowViewModel: ViewModel() {
         })
     }
 
-    fun findFollowing(userName: String = ""){
+    fun findFollowing(userName: String = "") {
         _isLoading.value = true
         val following: Call<List<ItemsItem>> = ApiConfig.getApiService().getFollowing(userName)
         following.enqueue(object : Callback<List<ItemsItem>> {
@@ -69,10 +68,10 @@ class FollowViewModel: ViewModel() {
                 call: Call<List<ItemsItem>>,
                 response: Response<List<ItemsItem>>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     _isLoading.value = false
                     val responseBody = response.body()
-                    if (responseBody != null){
+                    if (responseBody != null) {
                         _listFollowing.value = responseBody!!
                     } else {
                         _isLoading.value = false

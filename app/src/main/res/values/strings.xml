@@ -13,4 +13,10 @@
     <string name="followingView">Following</string>
     <string name="noFollowing">Tidak Ada Following</string>
     <string name="noFollowers">Tidak Ada Followers</string>
+    <string name="favorite_user">favorite_user</string>
+    <string name="setting">setting_darkmode</string>
+    <string name="setting_dark_mode">Setting</string>
+    <string name="darkmode">Dark Mode </string>
+    <string name="favorite">Favorite User</string>
+    <string name="favorite_user_null">Tidak ada user di daftar favorite</string>
 </resources>

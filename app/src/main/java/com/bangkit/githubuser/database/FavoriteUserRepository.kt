@@ -1,6 +1,7 @@
 package com.bangkit.githubuser.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.bangkit.githubuser.data.retrofit.ApiService
 import com.bangkit.githubuser.database.enitity.FavoriteUserEntity
 import com.bangkit.githubuser.database.room.UserDao
@@ -10,8 +11,11 @@ class FavoriteUserRepository private constructor(
     private val apiService: ApiService,
     private val userDao: UserDao,
     private val appExecutors: AppExecutors
-){
-    suspend fun setBookmarkedNews(user: FavoriteUserEntity){
+) {
+    private val result =
+        MediatorLiveData<com.bangkit.githubuser.database.Result<List<FavoriteUserEntity>>>()
+
+    suspend fun setBookmarkedNews(user: FavoriteUserEntity) {
         return userDao.insert(user)
     }
 
@@ -19,19 +23,24 @@ class FavoriteUserRepository private constructor(
         return userDao.getFavoriteByUser(user)
     }
 
-    suspend fun deleteUser(user: String){
+    suspend fun deleteUser(user: String) {
         userDao.delete(user)
     }
 
-    companion object{
+    fun getAllFavoriteUser(): LiveData<List<FavoriteUserEntity>> {
+
+        return userDao.getAllFavoriteUser()
+    }
+
+    companion object {
         @Volatile
-        private var instance : FavoriteUserRepository? = null
+        private var instance: FavoriteUserRepository? = null
         fun getInstance(
             apiService: ApiService,
             newsDao: UserDao,
             appExecutors: AppExecutors
-        ): FavoriteUserRepository{
-            return instance ?: synchronized(this){
+        ): FavoriteUserRepository {
+            return instance ?: synchronized(this) {
                 instance ?: FavoriteUserRepository(apiService, newsDao, appExecutors)
             }.also {
                 instance = it

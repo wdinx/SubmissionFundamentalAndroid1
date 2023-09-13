@@ -7,15 +7,15 @@ import androidx.room.RoomDatabase
 import com.bangkit.githubuser.database.enitity.FavoriteUserEntity
 
 @Database(entities = [FavoriteUserEntity::class], version = 1)
-abstract class FavoriteUserDatabase: RoomDatabase() {
+abstract class FavoriteUserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: FavoriteUserDatabase? = null
 
         fun getInstance(context: Context): FavoriteUserDatabase =
-            INSTANCE ?: synchronized(this){
+            INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     FavoriteUserDatabase::class.java,

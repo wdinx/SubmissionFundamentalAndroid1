@@ -14,7 +14,10 @@
         android:theme="@style/Theme.GitHubUser"
         tools:targetApi="31">
         <activity
-            android:name=".FavoriteUserActivity"
+            android:name=".ui.SettingActvitiy"
+            android:exported="false" />
+        <activity
+            android:name=".ui.FavoriteUserActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"
@@ -30,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

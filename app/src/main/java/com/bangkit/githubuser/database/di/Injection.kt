@@ -2,7 +2,6 @@ package com.bangkit.githubuser.database.di
 
 import android.content.Context
 import com.bangkit.githubuser.data.retrofit.ApiConfig
-import com.bangkit.githubuser.data.retrofit.ApiService
 import com.bangkit.githubuser.database.FavoriteUserRepository
 import com.bangkit.githubuser.database.room.FavoriteUserDatabase
 import com.bangkit.githubuser.util.AppExecutors
